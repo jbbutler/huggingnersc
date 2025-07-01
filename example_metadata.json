@@ -1,0 +1,12 @@
+{
+    "language": "en",
+    "filename": "iris.csv",
+    "tags": [
+        "pandas",
+        "csv",
+        "tabular"
+    ],
+    "official_name": "Iris",
+    "nickname": "iris",
+    "size_bucket": "n<1K"
+}

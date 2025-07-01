@@ -4,14 +4,11 @@ from jinja2 import Environment, FileSystemLoader
 import json
 import os
 
-
-HF_FILEPATH = 'https://huggingface.co/datasets/NERSC/'
-HF_ORG = 'NERSC'
-NERSC_PATH = '/global/cfs/cdirs/dasrepo/ai_ready_datasets/'
+from constants import HF_FILEPATH, HF_ORG, NERSC_PATH
 
 class HuggingNERSCDataset:
 
-    def __init__(self, official_name, nickname):
+    def __init__(self, official_name: str, nickname: str):
         self.nickname = nickname
         self.official_name = official_name
         self.hf_dir = HF_FILEPATH + nickname + '/'
@@ -34,7 +31,7 @@ class HuggingNERSCDataset:
         # create directory on NERSC Huggingface repo
         hf.create_repo(HF_ORG + '/' + self.nickname, repo_type='dataset')
 
-    def __grab_loader_script(self, filename):
+    def __grab_loader_script(self, filename: str):
 
         # grab and fill loader script as simple python string
         with open('loader_templates/basic_loader.py', 'r') as file:
@@ -43,7 +40,7 @@ class HuggingNERSCDataset:
 
         return loading_code
 
-    def construct_notebook(self, filename):
+    def construct_notebook(self, filename: str):
 
         loading_code = self.__grab_loader_script(filename)
         
@@ -57,7 +54,7 @@ class HuggingNERSCDataset:
         with open(self.nersc_dir + f'{self.nickname}_dataloader.ipynb', 'w', encoding='utf-8') as f:
             json.dump(notebook_data, f, indent=4)
 
-    def upload_readme(self, metadata):
+    def upload_readme(self, metadata: dict):
 
         loading_code = self.__grab_loader_script(metadata['filename'])
 
@@ -80,3 +77,11 @@ class HuggingNERSCDataset:
         api.upload_file(path_or_fileobj=self.nersc_dir + 'README.md', 
                         path_in_repo='README.md',
                         repo_id=HF_ORG + '/' + self.nickname, repo_type='dataset')
+
+    def save_dataset_info(self, metadata: dict):
+        
+        dataset_info = self.__dict__
+        dataset_info['metadata'] = metadata
+        
+        with open(self.nersc_dir + f'{self.nickname}_info.json', 'w') as f:
+            json.dump(dataset_info, f, indent=4)
