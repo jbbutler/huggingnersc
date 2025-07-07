@@ -21,7 +21,7 @@ def catalog_new_dataset(official_name: str, nickname: str, filename: str, metada
         metadata = json.load(f)
 
     hn_obj = HuggingNERSCDataset(official_name, nickname)
-    hn_obj.construct_repos()
+    hn_obj.construct_repo()
     hn_obj.construct_notebook(filename)
     hn_obj.upload_readme(metadata)
     hn_obj.save_dataset_info(metadata)

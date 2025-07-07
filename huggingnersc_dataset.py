@@ -23,11 +23,12 @@ class HuggingNERSCDataset:
 
         return display_str
 
-    def construct_repos(self):
+    def construct_repo(self):
         # create a directory on NERSC CFS repo
-        os.mkdir(self.nersc_dir)
+        ## Assume repo on NERSC CFS is already created
+        #os.mkdir(self.nersc_dir)
         # create the dataset folder
-        os.mkdir(self.nersc_dir + 'data/')
+        #os.mkdir(self.nersc_dir + 'data/')
         # create directory on NERSC Huggingface repo
         hf.create_repo(HF_ORG + '/' + self.nickname, repo_type='dataset')
 
