@@ -4,7 +4,7 @@ from jinja2 import Environment, FileSystemLoader
 import json
 import os
 
-from constants import HF_FILEPATH, HF_ORG, NERSC_PATH
+from constants import HF_FILEPATH, HF_ORG, NERSC_PATH, NERSC_WEB_PATH
 
 class HuggingNERSCDataset:
 
@@ -64,6 +64,7 @@ class HuggingNERSCDataset:
         fill_metadata = metadata.copy()
         fill_metadata['loading_code'] = loading_code
         fill_metadata['nersc_loc'] = self.nersc_dir
+        fill_metadata['download_link'] = NERSC_WEB_PATH + self.nickname + '/data/'
 
         # filling the readme
         env = Environment(loader=FileSystemLoader('.'))
