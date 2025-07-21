@@ -32,18 +32,16 @@ class HuggingNERSCDataset:
         # create directory on NERSC Huggingface repo
         hf.create_repo(HF_ORG + '/' + self.nickname, repo_type='dataset')
 
-    def __grab_loader_script(self, filename: str):
+    def __grab_loader_script(self, script_path: str):
 
-        # grab and fill loader script as simple python string
-        with open('loader_templates/basic_loader.py', 'r') as file:
-            loading_code = file.read()
-        loading_code = eval('f' + repr(loading_code))
-
+        with open(script_path, "r") as script:
+            loading_code = script.read()
+            
         return loading_code
 
-    def construct_notebook(self, filename: str):
+    def construct_notebook(self, script_path: str):
 
-        loading_code = self.__grab_loader_script(filename)
+        loading_code = self.__grab_loader_script(script_path)
         
         with open('template_notebook/template_loader.ipynb', 'r', encoding='utf-8') as f:
             notebook_data = json.load(f)
@@ -55,9 +53,9 @@ class HuggingNERSCDataset:
         with open(self.nersc_dir + f'{self.nickname}_dataloader.ipynb', 'w', encoding='utf-8') as f:
             json.dump(notebook_data, f, indent=4)
 
-    def upload_readme(self, metadata: dict):
+    def upload_readme(self, metadata: dict, script_path: str):
 
-        loading_code = self.__grab_loader_script(metadata['filename'])
+        loading_code = self.__grab_loader_script(script_path)
 
         # copying metadata dictionary to add loading code
         # so as to not clunk up the original metadata dictionary

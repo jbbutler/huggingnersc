@@ -7,13 +7,13 @@ from constants import NERSC_PATH
 app = typer.Typer()
 
 @app.command()
-def catalog_new_dataset(official_name: str, nickname: str, filename: str, metadata_path: str):
+def catalog_new_dataset(official_name: str, nickname: str, script_path: str, metadata_path: str):
     '''
     Command to catalog a new dataset on the NERSC CFS and NERSC Huggingface.
     Inputs:
         official_name (string): the name you want to give your dataset, to show up in titles, etc.
         nickname (string): name for your dataset to appear in filepaths
-        filename (string): the name of the file(s) that contain your dataset
+        script_path (string): path to .py file with your dataset's loader script in it
         metadata_path (string): path to json file with your dataset's metadata in it
     '''
 
@@ -22,8 +22,8 @@ def catalog_new_dataset(official_name: str, nickname: str, filename: str, metada
 
     hn_obj = HuggingNERSCDataset(official_name, nickname)
     hn_obj.construct_repo()
-    hn_obj.construct_notebook(filename)
-    hn_obj.upload_readme(metadata)
+    hn_obj.construct_notebook(script_path)
+    hn_obj.upload_readme(metadata, script_path)
     hn_obj.save_dataset_info(metadata)
 
     print(f'Dataset successfully cataloged! \n NERSC Location: {hn_obj.nersc_dir} \n HuggingFace Location: {hn_obj.hf_dir}')
