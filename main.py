@@ -26,7 +26,7 @@ def catalog_new_dataset(official_name: str, nickname: str, script_path: str, met
     hn_obj.upload_readme(metadata, script_path)
     hn_obj.save_dataset_info(metadata)
 
-    print(f'Dataset successfully cataloged! \n NERSC Location: {hn_obj.nersc_dir} \n HuggingFace Location: {hn_obj.hf_dir}')
+    print(f"Dataset successfully cataloged! \n NERSC Location: {hn_obj.nersc_dir} \n HuggingFace Location: {hn_obj.hf_dir}")
 
 @app.command()
 def inspect_dataset(nickname: str):
