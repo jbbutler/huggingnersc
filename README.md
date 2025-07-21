@@ -7,7 +7,7 @@ Implements a CLI to catalog your dataset on NERSC's Huggingface repo, populating
 To catalog your dataset, use the following command, 
 
 ```
-python main.py <official_name> <nickname> <script_path> <metadata_path>
+python main.py catalog_new_dataset <official_name> <nickname> <script_path> <metadata_path>
 ```
 
 with the following inputs:
@@ -16,3 +16,10 @@ with the following inputs:
 + `script_path` path to the dataloader script you'd like to provide (.py file only)
 + `nickname` the name you'd like to see in filepaths
 + `metadata_path` path to a json file with metadata that describes your dataset (to be added to the Huggingface repository)
+
+If you'd like to inspect the metadata of a dataset that has already been cataloged, use the following command:
+```
+python main.py inspect_dataset <nickname>
+```
+
+where `nickname` is the same as above.
