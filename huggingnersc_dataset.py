@@ -2,6 +2,7 @@ import pandas as pd
 import huggingface_hub as hf
 from jinja2 import Environment, FileSystemLoader
 import json
+import jsonschema as js
 import os
 
 from constants import HF_FILEPATH, HF_ORG, NERSC_PATH, NERSC_WEB_PATH
@@ -55,8 +56,13 @@ class HuggingNERSCDataset:
 
     def upload_readme(self, metadata: dict, script_path: str):
 
-        loading_code = self.__grab_loader_script(script_path)
+        # read the json schema
+        with open('metadata_schema.json') as f:
+            schema = json.load(f)
+        # check if metadata json file satisfies schema
+        js.validate(instance=metadata, schema=schema)
 
+        loading_code = self.__grab_loader_script(script_path)
         # copying metadata dictionary to add loading code
         # so as to not clunk up the original metadata dictionary
         fill_metadata = metadata.copy()

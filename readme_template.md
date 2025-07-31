@@ -1,16 +1,17 @@
 ---
-language:
-- {{ language }}
-tags:
-{% for tag in tags -%}
-- {{ tag }}
+{% for field_name, field_entry in datacard_tags.items() -%}
+{% if field_name=='pretty_name' -%}
+{{field_name}}: {{field_entry}}
+{% else -%}
+{{field_name}}:
+{% for item in (field_entry if field_entry is not string else [field_entry]) -%}
+- {{ item }}    
 {% endfor -%}
-pretty_name: {{ official_name }}
-size_categories:
-- {{ size_bucket }}
+{% endif -%}
+{% endfor -%}
 ---
 
-# {{ official_name }}
+# {{ datacard_tags.pretty_name }}
 
 The following code can be used to load the dataset from its stored location at NERSC. You may also access this code via a NERSC-hosted Jupyter notebook [here](https://jupyter.nersc.gov/hub/user-redirect/lab/tree{{nersc_loc}}{{ nickname }}_dataloader.ipynb).
 

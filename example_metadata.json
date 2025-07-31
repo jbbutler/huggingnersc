@@ -1,12 +1,1 @@
-{
-    "language": "en",
-    "filename": "iris.csv",
-    "tags": [
-        "pandas",
-        "csv",
-        "tabular"
-    ],
-    "official_name": "Iris",
-    "nickname": "iris",
-    "size_bucket": "n<1K"
-}
+{"datacard_tags": {"pretty_name": "Iris", "language": ["en"], "size_categories": "n<1K", "tags": ["csv", "biology"]}, "other_info": {"nickname": "iris"}}

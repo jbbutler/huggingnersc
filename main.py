@@ -1,6 +1,7 @@
 import typer
 import os
 import json
+import jsonschema as js
 from huggingnersc_dataset import HuggingNERSCDataset
 from constants import NERSC_PATH
 
@@ -17,9 +18,10 @@ def catalog_new_dataset(official_name: str, nickname: str, script_path: str, met
         metadata_path (string): path to json file with your dataset's metadata in it
     '''
 
+    # read the metadata json
     with open(metadata_path) as f:
         metadata = json.load(f)
-
+    
     hn_obj = HuggingNERSCDataset(official_name, nickname)
     hn_obj.construct_repo()
     hn_obj.construct_notebook(script_path)
