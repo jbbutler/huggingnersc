@@ -14,7 +14,7 @@ An example of a repo created for Sir Ronald Fisher's famous iris classification 
 
 ![Example of iris classification dataset repo.](images/iris_example_annotated.png)
 
-
+See for yourself: https://huggingface.co/datasets/NERSC/iris
 
 ### Setup
 To use the any of the CLI commands, first clone this repository.
