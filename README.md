@@ -12,7 +12,7 @@ Easily curate a dataset in a repo on the NERSC Hugging Face organziation by exec
 
 An example of a repo created for Sir Ronald Fisher's famous iris classification dataset is shown below.
 
-![Example of iris classification dataset repo.](/images/iris_classification_annotated.png)
+![Example of iris classification dataset repo.](images/iris_classification_annotated.png)
 
 
 
