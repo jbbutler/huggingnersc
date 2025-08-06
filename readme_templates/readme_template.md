@@ -13,7 +13,19 @@
 
 # {{ datacard_tags.pretty_name }}
 
-The following code can be used to load the dataset from its stored location at NERSC. You may also access this code via a NERSC-hosted Jupyter notebook [here](https://jupyter.nersc.gov/hub/user-redirect/lab/tree{{nersc_loc}}{{ nickname }}_dataloader.ipynb).
+The following code can be used to load the dataset from its stored location at NERSC.
+
+{% if not distributed -%}
+You may also access this code via a NERSC-hosted Jupyter notebook [here](https://jupyter.nersc.gov/hub/user-redirect/lab/tree{{nersc_loc}}{{ other_info.nickname }}_dataloader.ipynb).
+{% else -%}
+{% endif -%}
+
+{% if batch_code -%}
+Batch script to run the dataloader.
+```
+{{ batch_code }}
+```
+{% endif -%}
 
 ```
 {{ loading_code }}

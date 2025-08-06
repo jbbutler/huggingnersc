@@ -1,4 +1,5 @@
 import typer
+from typing import Annotated
 import os
 import json
 import jsonschema as js
@@ -8,7 +9,7 @@ from constants import NERSC_PATH
 app = typer.Typer()
 
 @app.command()
-def catalog_new_dataset(official_name: str, nickname: str, script_path: str, metadata_path: str):
+def catalog_new_dataset(official_name: str, nickname: str, script_path: str, metadata_path:str, batch_path: Annotated[str, typer.Argument()] = None, distributed: Annotated[bool, typer.Argument()] = False):
     '''
     Command to catalog a new dataset on the NERSC CFS and NERSC Huggingface.
     Inputs:
@@ -16,6 +17,7 @@ def catalog_new_dataset(official_name: str, nickname: str, script_path: str, met
         nickname (string): name for your dataset to appear in filepaths
         script_path (string): path to .py file with your dataset's loader script in it
         metadata_path (string): path to json file with your dataset's metadata in it
+        batch_path (string): optional, path to .sh file used for dataloader
     '''
 
     # read the metadata json
@@ -24,8 +26,10 @@ def catalog_new_dataset(official_name: str, nickname: str, script_path: str, met
     
     hn_obj = HuggingNERSCDataset(official_name, nickname)
     hn_obj.construct_repo()
-    hn_obj.construct_notebook(script_path)
-    hn_obj.upload_readme(metadata, script_path)
+    hn_obj.upload_loader_scripts(script_path, batch_path)
+    if distributed:
+        hn_obj.construct_notebook(script_path)
+    hn_obj.upload_readme(metadata, script_path, batch_path, distributed)
     hn_obj.save_dataset_info(metadata)
 
     print(f"Dataset successfully cataloged! \n NERSC Location: {hn_obj.nersc_dir} \n HuggingFace Location: {hn_obj.hf_dir}")

@@ -40,6 +40,22 @@ class HuggingNERSCDataset:
             
         return loading_code
 
+    def upload_loader_scripts(self, script_path: str, batch_path: str = None):
+
+        script_name = os.path.basename(script_path)
+        # upload the loader script to HF
+        api = hf.HfApi()
+        api.upload_file(path_or_fileobj=script_path, 
+                        path_in_repo=script_name,
+                        repo_id=HF_ORG + '/' + self.nickname, repo_type='dataset')
+
+        # if providing an example batch script to run with dataloader, also upload it
+        if batch_path:
+            batch_name = os.path.basename(batch_path)
+            api.upload_file(path_or_fileobj=batch_path, 
+                            path_in_repo=batch_name,
+                            repo_id=HF_ORG + '/' + self.nickname, repo_type='dataset')
+
     def construct_notebook(self, script_path: str):
 
         loading_code = self.__grab_loader_script(script_path)
@@ -54,7 +70,10 @@ class HuggingNERSCDataset:
         with open(self.nersc_dir + f'{self.nickname}_dataloader.ipynb', 'w', encoding='utf-8') as f:
             json.dump(notebook_data, f, indent=4)
 
-    def upload_readme(self, metadata: dict, script_path: str):
+    def upload_readme(self, metadata: dict, script_path: str, batch_path: str = None, distributed: bool = False):
+        '''
+        Method to template and upload the README.
+        '''
 
         # read the json schema
         with open('metadata_schema.json') as f:
@@ -67,12 +86,16 @@ class HuggingNERSCDataset:
         # so as to not clunk up the original metadata dictionary
         fill_metadata = metadata.copy()
         fill_metadata['loading_code'] = loading_code
+        fill_metadata['distributed'] = distributed #controls whether the Jupyter notebook will be created or not
         fill_metadata['nersc_loc'] = self.nersc_dir
         fill_metadata['download_link'] = NERSC_WEB_PATH + self.nickname + '/data/'
+        if batch_path:
+            batch_code = self.__grab_loader_script(batch_path)
+            fill_metadata['batch_code'] = batch_code
 
         # filling the readme
         env = Environment(loader=FileSystemLoader('.'))
-        template = env.get_template('readme_template.md')
+        template = env.get_template('/readme_templates/readme_template.md')
         filled_readme = template.render(fill_metadata)
         
         with open(self.nersc_dir + 'README.md', 'w') as f:
