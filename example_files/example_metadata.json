@@ -1,1 +1,1 @@
-{"datacard_tags": {"pretty_name": "Iris", "language": ["en"], "size_categories": "n<1K", "tags": ["csv", "biology"]}, "other_info": {"nickname": "iris"}}
+{"datacard_tags": {"pretty_name": "Iris", "language": ["en"], "size_categories": "n<1K", "task_categories": ["tabular-classification"], "tags": ["csv", "biology"]}, "other_info": {"nickname": "iris"}}
