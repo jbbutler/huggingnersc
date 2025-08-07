@@ -12,9 +12,9 @@ Easily curate a dataset in a repo on the NERSC Hugging Face organziation by exec
 
 An example of a repo created for Sir Ronald Fisher's famous iris classification dataset is shown below.
 
-![Example of iris classification dataset repo.](/images/iris_classification_annotated.png)
+![Example of iris classification dataset repo.](images/iris_example_annotated.png)
 
-
+See for yourself: https://huggingface.co/datasets/NERSC/iris
 
 ### Setup
 To use the any of the CLI commands, first clone this repository.
@@ -41,4 +41,10 @@ with the following specifications
 + `<batch_script>`: an optional parameter, defaults to None; if you want to provide a batch script to run your data loader code (useful for multi-node distributed data loaders)
 + `<is_distributed>`: an optional parameter, defaults to False; if providing a distributed data loader, will not template a Jupyter notebook (*Pending me figuring out how to provide distributed data loaders on jupyter.nersc.gov...*)
 
-### 
+### Inspecting an Already-Cataloged Dataset
+
+TODO: fill in
+
+### Metadata JSON
+
+TODO: describe structure of metadata json files so that they adhere to schema
