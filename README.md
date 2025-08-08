@@ -52,3 +52,27 @@ where `<nickname>` is the title of the desired dataset used in filepaths.
 As mentioned before, the metadata files supplied when cataloging a dataset must adhere to the schema in `metadata_schema.json`. This is to enforce some degree of uniformity among the metadata categories across datasets, making things a bit more organized. Also, metadata needs to be suppied to Hugging Face in a particular way for things not to break, so this helps things run smoothly.
 
 In the json file, you need two keys: `datacard_tags` and `other_info`. The former is for configuring your tags on the Hugging Face dataset card, and the latter is for all other metadata. Datacard tags includes items like the license, language, ML task category (classification, regression, etc.), the size of your dataset, filetypes, domain, etc. Other info is any nickname or papers associated with your dataset. Note: if you provide an arXiv link, a tag linking to the arXiv entry will appear among the other datacard tags.
+
+More precisely, below we provide the overall structure with valid key names and valid metadata.
++ `datacard_tags`
+  - `license`
+    - type: string
+    - valid options: 'apache-2.0', 'mit', 'bsd', 'bsd-2-clause', 'bsd-3-clause', 'bsd-3-clause-clear', 'cc', 'wtfpl', 'unlicense'  
+  - `task_categories`
+    - type: array of at least one string
+    - valid options: 'text-classification', 'feature-extraction', 'image-classification', 'image-segmentation', 'audio-classification', 'tabular-classification', 'tabular-regression'
+  - `size_categories` (required)
+    - type: string
+    - valid options: 'n<1K', '1K<n<10K', '10K<n<100K', '100K<n<1M', '1M<n<10M', '10M<n<100M', '100M<n<1B', '1B<n<10B', '10B<n<100B', '100B<n<1T', 'n>1T'  
+  - `language`
+    - type: array of at least one string
+    - valid options: 'en', 'zh', 'fr', 'es', 'ru', 'ko', 'hi'
+  - `tags` (other tags you want displayed at the top of your datacard)
+    - type: array of at least one string
+    - valid options: 'csv', 'hdf5', 'netcdf', 'txt', 'particle physics', 'cosmology', 'weather/climate', 'biology', 'chemistry'
+  - `pretty_name` (display title of your dataset; required)
+    - type: string
++ `other_info`
+  - `nickname` (nickname of dataset to appear in filepaths)
+  - `papers` (will display links in README; arXiv links will also be given tags at the top of the datacard)
+    - type: array of at least 1 string 
