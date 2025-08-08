@@ -29,7 +29,7 @@ conda activate huggingnersc_env
 ```
 
 ### Cataloging a New Dataset
-To catalog a new dataset on the NERSC Hugging Face organization, use the `catalog_new_dataset` function
+To catalog a new dataset on the NERSC Hugging Face organization, use the `catalog_new_dataset` command
 ```
 python main.py catalog-new-dataset <official_name> <nickname> <loader_script> <metadata_json> <optional: batch_script> <optional: is_distributed>
 ```
@@ -42,9 +42,13 @@ with the following specifications
 + `<is_distributed>`: an optional parameter, defaults to `False`; if providing a distributed data loader, will not template a Jupyter notebook (*Pending me figuring out how to provide distributed data loaders on jupyter.nersc.gov...*)
 
 ### Inspecting an Already-Cataloged Dataset
-
-TODO: fill in
+To see all the information associated with an already-cataloged dataset (location on HuggingFace, location at NERSC, etc.), use the `inspect_dataset` command
+```
+python main.py inspect-dataset `<nickname>` 
+```
+where `<nickname>` is the title of the desired dataset used in filepaths.
 
 ### Metadata JSON
+As mentioned before, the metadata files supplied when cataloging a dataset must adhere to the schema in `metadata_schema.json`. This is to enforce some degree of uniformity among the metadata categories across datasets, making things a bit more organized. Also, metadata needs to be suppied to Hugging Face in a particular way for things not to break, so this helps things run smoothly.
 
-TODO: describe structure of metadata json files so that they adhere to schema
+In the json file, you need two keys: `datacard_tags` and `other_info`. The former is for configuring your tags on the Hugging Face dataset card, and the latter is for all other metadata. Datacard tags includes items like the license, language, ML task category (classification, regression, etc.), the size of your dataset, filetypes, domain, etc. Other info is any nickname or papers associated with your dataset. Note: if you provide an arXiv link, a tag linking to the arXiv entry will appear among the other datacard tags.
