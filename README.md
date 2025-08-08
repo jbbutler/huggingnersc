@@ -38,8 +38,8 @@ with the following specifications
 + `<nickname>`: the name to use in filepaths
 + `<loader_script>`: a script to load up the data
 + `<metadata_json>`: a json file containing metadata tags, etc. you want displayed on the repo dataset card (NOTE: must comply with schema in `metadata_schema.json`; more on this later)
-+ `<batch_script>`: an optional parameter, defaults to None; if you want to provide a batch script to run your data loader code (useful for multi-node distributed data loaders)
-+ `<is_distributed>`: an optional parameter, defaults to False; if providing a distributed data loader, will not template a Jupyter notebook (*Pending me figuring out how to provide distributed data loaders on jupyter.nersc.gov...*)
++ `<batch_script>`: an optional parameter, defaults to `None`; if you want to provide a batch script to run your data loader code (useful for multi-node distributed data loaders)
++ `<is_distributed>`: an optional parameter, defaults to `False`; if providing a distributed data loader, will not template a Jupyter notebook (*Pending me figuring out how to provide distributed data loaders on jupyter.nersc.gov...*)
 
 ### Inspecting an Already-Cataloged Dataset
 
