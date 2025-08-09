@@ -34,3 +34,10 @@ Batch script to run the dataloader.
 If you would like to download the data, visit the following link:
 
 {{ download_link }}
+
+{% if other_info.papers -%}
+Paper(s):
+{% for paper in (other_info.papers if other_info.papers is not string else [other_info.papers]) -%}
+- {{ paper }}
+{% endfor -%}
+{% endif -%}

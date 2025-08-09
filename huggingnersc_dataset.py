@@ -4,7 +4,7 @@ import json
 import jsonschema as js
 import os
 
-from constants import HF_FILEPATH, HF_ORG, NERSC_PATH, NERSC_WEB_PATH
+from constants import HF_FILEPATH, HF_ORG, NERSC_PATH
 
 class HuggingNERSCDataset:
 
@@ -69,7 +69,7 @@ class HuggingNERSCDataset:
         with open(self.nersc_dir + f'{self.nickname}_dataloader.ipynb', 'w', encoding='utf-8') as f:
             json.dump(notebook_data, f, indent=4)
 
-    def upload_readme(self, metadata: dict, script_path: str, batch_path: str = None, distributed: bool = False):
+    def upload_readme(self, metadata: dict, script_path: str, nersc_portal_link: str, batch_path: str = None, distributed: bool = False):
         '''
         Method to template and upload the README.
         '''
@@ -87,7 +87,7 @@ class HuggingNERSCDataset:
         fill_metadata['loading_code'] = loading_code
         fill_metadata['distributed'] = distributed #controls whether the Jupyter notebook will be created or not
         fill_metadata['nersc_loc'] = self.nersc_dir
-        fill_metadata['download_link'] = NERSC_WEB_PATH + self.nickname + '/data/'
+        fill_metadata['download_link'] = nersc_portal_link
         if batch_path:
             batch_code = self.__grab_loader_script(batch_path)
             fill_metadata['batch_code'] = batch_code
