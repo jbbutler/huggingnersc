@@ -7,26 +7,32 @@ import os
 from constants import HF_FILEPATH, HF_ORG, NERSC_PATH
 
 class HuggingNERSCDataset:
+    '''
+    Object that links a dataset hosted at NERSC with a repository on the NERSC
+    Hugging Face organization. Methods handle filling repository with info
+    automatically.
+    '''
 
-    def __init__(self, official_name: str, nickname: str):
+    def __init__(self, official_name: str, nickname: str, data_path: str):
         self.nickname = nickname
         self.official_name = official_name
         self.hf_dir = HF_FILEPATH + nickname + '/'
-        self.nersc_dir = NERSC_PATH + nickname + '/'
+        self.data_dir = data_path
+        self.nersc_dir = NERSC_PATH + self.nickname + '/'
 
     def __repr__(self):
         display_str = f'''NERSC HuggingFace Dataset Object: 
         \n -official_name: {self.official_name} 
         \n -nickname: {self.nickname}
         \n -huggingface location: {self.hf_dir}
-        \n -nersc location: {self.nersc_dir}'''
+        \n -nersc data location: {self.data_dir}
+        \n -nersc catalog location: {self.nersc_dir}'''
 
         return display_str
 
     def construct_repo(self):
-        # create a directory on NERSC CFS repo
-        ## Assume repo on NERSC CFS is already created
-        #os.mkdir(self.nersc_dir)
+        # create a directory on NERSC CFS to store metadata, readmes, notebooks, etc.
+        os.mkdir(self.nersc_dir)
         # create the dataset folder
         #os.mkdir(self.nersc_dir + 'data/')
         # create directory on NERSC Huggingface repo

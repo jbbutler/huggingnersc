@@ -9,13 +9,21 @@ from constants import NERSC_PATH
 app = typer.Typer()
 
 @app.command()
-def catalog_new_dataset(official_name: str, nickname: str, script_path: str, nersc_portal_link: str, metadata_path:str, batch_path: Annotated[str, typer.Argument()] = None, distributed: Annotated[bool, typer.Argument()] = False):
+def catalog_new_dataset(official_name: str,
+                        nickname: str,
+                        script_path: str,
+                        data_path: str,
+                        nersc_portal_link: str,
+                        metadata_path:str,
+                        batch_path: Annotated[str, typer.Argument()] = None,
+                        distributed: Annotated[bool, typer.Argument()] = False):
     '''
     Command to catalog a new dataset on the NERSC CFS and NERSC Huggingface.
     Inputs:
         official_name (string): the name you want to give your dataset, to show up in titles, etc.
         nickname (string): name for your dataset to appear in filepaths
         script_path (string): path to .py file with your dataset's loader script in it
+        data_path (string): path to the dataset on NERSC
         nersc_portal_link (str): link to download data from portal.nersc.gov
         metadata_path (string): path to json file with your dataset's metadata in it
         batch_path (string): optional, path to .sh file used for dataloader
@@ -26,10 +34,10 @@ def catalog_new_dataset(official_name: str, nickname: str, script_path: str, ner
     with open(metadata_path) as f:
         metadata = json.load(f)
     
-    hn_obj = HuggingNERSCDataset(official_name, nickname)
+    hn_obj = HuggingNERSCDataset(official_name, nickname, data_path)
     hn_obj.construct_repo()
     hn_obj.upload_loader_scripts(script_path, batch_path)
-    if distributed:
+    if not distributed:
         hn_obj.construct_notebook(script_path)
     hn_obj.upload_readme(metadata, script_path, nersc_portal_link, batch_path, distributed)
     hn_obj.save_dataset_info(metadata)
