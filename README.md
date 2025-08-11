@@ -31,12 +31,13 @@ conda activate huggingnersc_env
 ### Cataloging a New Dataset
 To catalog a new dataset on the NERSC Hugging Face organization, use the `catalog_new_dataset` command
 ```
-python main.py catalog-new-dataset <official_name> <nickname> <loader_script> <metadata_json> <optional: batch_script> <optional: is_distributed>
+python main.py catalog-new-dataset <official_name> <nickname> <loader_script> <portal_link> <metadata_json> <optional: batch_script> <optional: is_distributed>
 ```
 with the following specifications
 + `<official_name>`: the title of your dataset that you want displayed on the repo page
 + `<nickname>`: the name to use in filepaths
 + `<loader_script>`: a script to load up the data
++ `<portal_link>`: the link to your dataset on portal.nersc.gov
 + `<metadata_json>`: a json file containing metadata tags, etc. you want displayed on the repo dataset card (NOTE: must comply with schema in `metadata_schema.json`; more on this later)
 + `<batch_script>`: an optional parameter, defaults to `None`; if you want to provide a batch script to run your data loader code (useful for multi-node distributed data loaders)
 + `<is_distributed>`: an optional parameter, defaults to `False`; if providing a distributed data loader, will not template a Jupyter notebook (*Pending me figuring out how to provide distributed data loaders on jupyter.nersc.gov...*)
