@@ -45,7 +45,7 @@ with the following specifications
 ### Inspecting an Already-Cataloged Dataset
 To see all the information associated with an already-cataloged dataset (location on HuggingFace, location at NERSC, etc.), use the `inspect_dataset` command
 ```
-python main.py inspect-dataset `<nickname>` 
+python main.py inspect-dataset <nickname> 
 ```
 where `<nickname>` is the title of the desired dataset used in filepaths.
 
