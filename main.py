@@ -1,3 +1,8 @@
+'''
+Script to implement the HuggingNERSC CLI
+Jimmy Butler, August 2025
+'''
+
 import typer
 from typing import Annotated
 import os
